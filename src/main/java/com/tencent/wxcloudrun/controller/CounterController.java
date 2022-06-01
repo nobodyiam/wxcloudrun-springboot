@@ -75,6 +75,16 @@ public class CounterController {
       }
       counterService.clearCount(1);
       return ApiResponse.ok(0);
+    } else if (request.getAction().equals("decr")) {
+      Integer count = 1;
+      if (curCounter.isPresent()) {
+        count = curCounter.get().getCount() - count;
+      }
+      Counter counter = new Counter();
+      counter.setId(1);
+      counter.setCount(count);
+      counterService.upsertCount(counter);
+      return ApiResponse.ok(count);
     } else {
       return ApiResponse.error("参数action错误");
     }
